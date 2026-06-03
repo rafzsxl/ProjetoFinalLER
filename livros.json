@@ -1,0 +1,17 @@
+{
+    "Livro do Rezende": {
+        "autor": "Rezende",
+        "paginas": "91",
+        "disponivel": true
+    },
+    "Livro que não é do Rezende": {
+        "autor": "Rezende",
+        "paginas": "78",
+        "disponivel": true
+    },
+    "A Paciente Silenciosa": {
+        "autor": "Alex Michaelides",
+        "paginas": "350",
+        "disponivel": true
+    }
+}
