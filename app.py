@@ -2,7 +2,6 @@ import json
 import os
 from datetime import datetime, timedelta
 
-# Arquivos para persistência de dados (RNF01)
 ARQUIVO_ALUNOS = "alunos.json"
 ARQUIVO_LIVROS = "livros.json"
 ARQUIVO_EMPRESTIMOS = "emprestimos.json"
@@ -32,15 +31,13 @@ def salvar_dados(alunos, livros, emprestimos):
     with open(ARQUIVO_EMPRESTIMOS, "w", encoding="utf-8") as f:
         json.dump(emprestimos, f, indent=4, ensure_ascii=False)
 
-# --- FUNÇÕES DO SISTEMA (RFs) ---
-
 def cadastrar_aluno(alunos):
     print("\n--- CADASTRO DE ALUNO ---")
     cpf = input("CPF (Apenas números): ").strip()
     if cpf in alunos:
         print("Erro: Este CPF já está cadastrado.")
         return
-    nome = input("Nome completo: ").strip()
+    nome = input("Nome completo: ").strip().lower()
     idade = input("Idade: ").strip()
 
     if not cpf or not nome or not idade:
@@ -52,11 +49,11 @@ def cadastrar_aluno(alunos):
 
 def cadastrar_livro(livros):
     print("\n--- CADASTRO DE LIVRO ---")
-    titulo = input("Título do livro: ").strip()
+    titulo = input("Título do livro: ").strip().lower()
     if titulo in livros:
         print("Erro: Este livro já está cadastrado.")
         return
-    autor = input("Autor: ").strip()
+    autor = input("Autor: ").strip().lower()
     paginas = input("Quantidade de páginas: ").strip()
 
     if not titulo or not autor or not paginas:
@@ -87,7 +84,6 @@ def registrar_emprestimo(alunos, livros, emprestimos):
         print("Erro: Aluno não cadastrado.")
         return
 
-    # RN01: Verificar limite de 3 livros
     livros_com_aluno = sum(1 for e in emprestimos if e["cpf_aluno"] == cpf and not e["devolvido"])
     if livros_com_aluno >= 3:
         print("Erro: O aluno já atingiu o limite de 3 livros emprestados!")
@@ -98,12 +94,10 @@ def registrar_emprestimo(alunos, livros, emprestimos):
         print("Erro: Livro não encontrado no acervo.")
         return
 
-    # RN02: Verificar disponibilidade
     if not livros[titulo]["disponivel"]:
         print("Erro: Este livro já está emprestado para outra pessoa.")
         return
 
-    # Entrada de dias para simulação de testes (0 para hoje)
     dias_atraso_simulado = int(input("Para fins de teste, quer simular que o empréstimo foi feito há quantos dias? (0 para hoje): ") or 0)
     data_emprestimo = datetime.now() - timedelta(days=dias_atraso_simulado)
 
@@ -123,7 +117,6 @@ def calcular_multa(data_emprestimo_str):
     data_atual = datetime.now()
     dias_passados = (data_atual - data_emp).days
 
-    # RN03: Limite de 7 dias, R$ 1,50 por dia de atraso
     if dias_passados > 7:
         dias_atraso = dias_passados - 7
         return dias_atraso, dias_atraso * 1.50
@@ -145,7 +138,7 @@ def consultar_pendencias(alunos, emprestimos):
 
 def registrar_devolucao(livros, emprestimos):
     print("\n--- REGISTRO DE DEVOLUÇÃO ---")
-    titulo = input("Título do livro que está sendo devolvido: ").strip()
+    titulo = input("Título do livro que está sendo devolvido: ").strip().lower()
 
     emprestimo_ativo = None
     for e in emprestimos:
@@ -160,6 +153,8 @@ def registrar_devolucao(livros, emprestimos):
     dias_atraso, multa = calcular_multa(emprestimo_ativo["data_emprestimo"])
 
     emprestimo_ativo["devolvido"] = True
+    emprestimo_ativo["data_devolucao"] = datetime.now().strftime("%Y-%m-%d %H;%M:%S")
+
     livros[titulo]["disponivel"] = True
 
     print("\nDevolução concluída com sucesso!")
@@ -168,7 +163,6 @@ def registrar_devolucao(livros, emprestimos):
     else:
         print("Livro entregue dentro do prazo. Sem multas.")
 
-# --- FLUXO PRINCIPAL ---
 
 def main():
     alunos, livros, emprestimos = carregar_dados()

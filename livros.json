@@ -1,17 +1,47 @@
 {
-    "Livro do Rezende": {
-        "autor": "Rezende",
-        "paginas": "91",
+    "o acordo": {
+        "autor": "elle kennedy",
+        "paginas": "360",
         "disponivel": true
     },
-    "Livro que não é do Rezende": {
-        "autor": "Rezende",
-        "paginas": "78",
+    "a cabeça do santo": {
+        "autor": "socorro acioli",
+        "paginas": "176",
+        "disponivel": false
+    },
+    "verity": {
+        "autor": "colleen hoover",
+        "paginas": "320",
         "disponivel": true
     },
-    "A Paciente Silenciosa": {
-        "autor": "Alex Michaelides",
-        "paginas": "350",
+    "noites brancas": {
+        "autor": "fiódor dostoiévski",
+        "paginas": "96",
+        "disponivel": true
+    },
+    "a morte de ivan ilitch": {
+        "autor": "liev tolstói",
+        "paginas": "96",
+        "disponivel": true
+    },
+    "o erro": {
+        "autor": "elle kennedy",
+        "paginas": "280",
+        "disponivel": true
+    },
+    "memórias do subsolo": {
+        "autor": "fiódor dostoiévski",
+        "paginas": "152",
+        "disponivel": true
+    },
+    "nunca minta": {
+        "autor": "freida mcfadden",
+        "paginas": "294",
+        "disponivel": true
+    },
+    "peter pan": {
+        "autor": "j. m. barrie",
+        "paginas": "67",
         "disponivel": true
     }
 }
