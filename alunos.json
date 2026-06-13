@@ -1,26 +1,6 @@
 {
     "50401872890": {
-        "nome": "rafael gomes",
-        "idade": "16"
-    },
-    "167676767": {
-        "nome": "sixseven da silva",
-        "idade": "67"
-    },
-    "426741414141414": {
-        "nome": "famador de aura da silva",
-        "idade": "41"
-    },
-    "13671671673": {
-        "nome": "platini",
-        "idade": "29"
-    },
-    "14040214170": {
-        "nome": "morato",
-        "idade": "31"
-    },
-    "19301937109": {
-        "nome": "diogo",
-        "idade": "39"
+        "nome": "rafael",
+        "idade": 16
     }
 }

@@ -1,47 +1,7 @@
 {
-    "o acordo": {
-        "autor": "elle kennedy",
-        "paginas": "360",
-        "disponivel": true
-    },
-    "a cabeça do santo": {
-        "autor": "socorro acioli",
-        "paginas": "176",
-        "disponivel": false
-    },
-    "verity": {
-        "autor": "colleen hoover",
-        "paginas": "320",
-        "disponivel": true
-    },
     "noites brancas": {
         "autor": "fiódor dostoiévski",
-        "paginas": "96",
-        "disponivel": true
-    },
-    "a morte de ivan ilitch": {
-        "autor": "liev tolstói",
-        "paginas": "96",
-        "disponivel": true
-    },
-    "o erro": {
-        "autor": "elle kennedy",
-        "paginas": "280",
-        "disponivel": true
-    },
-    "memórias do subsolo": {
-        "autor": "fiódor dostoiévski",
-        "paginas": "152",
-        "disponivel": true
-    },
-    "nunca minta": {
-        "autor": "freida mcfadden",
-        "paginas": "294",
-        "disponivel": true
-    },
-    "peter pan": {
-        "autor": "j. m. barrie",
-        "paginas": "67",
+        "classificacao": "14",
         "disponivel": true
     }
 }
