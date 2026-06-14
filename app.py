@@ -145,17 +145,8 @@ def registrar_emprestimo(alunos, livros, emprestimos):
             print(f"Este livro possui classificação indicativa de +{classificacao_livro} anos. Empréstimo negado!")
             return
 
-    while True:
-        dias_input = input("Simular empréstimo há quantos dias? (0 para hoje): ").strip()
-        if not dias_input:
-            dias_atraso_simulado = 0
-            break
-        elif dias_input.isdigit():
-            dias_atraso_simulado = int(dias_input)
-            break
-        print("Erro: Digite um número inteiro de dias.")
-
-    data_emprestimo = datetime.now() - timedelta(days=dias_atraso_simulado)
+    # Agora o empréstimo grava a data REAL e exata de agora automaticamente
+    data_emprestimo = datetime.now()
 
     emprestimos.append({
         "cpf_aluno": cpf,
@@ -167,29 +158,43 @@ def registrar_emprestimo(alunos, livros, emprestimos):
     livros[titulo]["disponivel"] = False
     print(f"Empréstimo do livro '{titulo.title()}' registrado com sucesso para {alunos[cpf]['nome'].title()}!")
 
-def calcular_multa(data_emprestimo_str):
-    data_emp = datetime.strptime(data_emprestimo_str, "%Y-%m-%d %H:%M:%S")
-    data_atual = datetime.now()
-    dias_passados = (data_atual - data_emp).days
-
-    if dias_passados > 7:
-        dias_atraso = dias_passados - 7
-        return dias_atraso, dias_atraso * 1.50
-    return 0, 0.0
 
 def consultar_pendencias(alunos, emprestimos):
-    print("\n--- PENDÊNCIAS E MULTAS ---")
-    pendentes = [e for e in emprestimos if not e["devolvido"]]
+    print("\n=======================================================")
+    print("       PAINEL DE EMPRÉSTIMOS ATIVOS (TEMPO REAL)       ")
+    print("=======================================================")
+    
+    ativos = [e for e in emprestimos if not e["devolvido"]]
 
-    if not pendentes:
-        print("Não há empréstimos pendentes no momento.")
+    if not ativos:
+        print("Nenhum livro está emprestado no momento. Acervo completo!")
+        print("=======================================================")
         return
 
-    for e in pendentes:
-        nome_aluno = alunos[e['cpf_aluno']]['nome']
-        dias_atraso, multa = calcular_multa(e["data_emprestimo"])
-        status_prazo = f"EM ATRASO ({dias_atraso} dias) - Multa: R$ {multa:.2f}" if dias_atraso > 0 else "No prazo"
-        print(f"Livro: '{e['titulo_livro'].title()}' | Aluno: {nome_aluno.title()} | Status: {status_prazo}")
+    print(f"{'ALUNO':<15} | {'LIVRO':<20} | {'STATUS / PRAZO'}")
+    print("-" * 55)
+
+    for e in ativos:
+        nome_aluno = alunos[e['cpf_aluno']]['nome'].title()
+        titulo_livro = e['titulo_livro'].title()
+        
+        # O painel continua calculando o tempo de rua com base na data real do relógio
+        data_emp = datetime.strptime(e["data_emprestimo"], "%Y-%m-%d %H:%M:%S")
+        data_atual = datetime.now()
+        dias_passados = (data_atual - data_emp).days
+        
+        if dias_passados > 7:
+            dias_atraso = dias_passados - 7
+            multa = dias_atraso * 1.50
+            status = f"⚠️ ATRASADO ({dias_atraso} dias) - Multa atual: R$ {multa:.2f}"
+        else:
+            dias_restantes = 7 - dias_passados
+            status = "🟢 No prazo (Vence HOJE!)" if dias_restantes == 0 else f"🟢 No prazo (Resta(m) {dias_restantes} dia(s))"
+
+        print(f"{nome_aluno:<15} | {titulo_livro:<20} | {status}")
+        
+    print("=======================================================")
+
 
 def registrar_devolucao(livros, emprestimos):
     print("\n--- REGISTRO DE DEVOLUÇÃO ---")
@@ -205,10 +210,28 @@ def registrar_devolucao(livros, emprestimos):
         print("Erro: Este livro não consta como emprestado ou não existe.")
         return
 
-    dias_atraso, multa = calcular_multa(emprestimo_ativo["data_emprestimo"])
+    while True:
+        dias_input = input("A devolução está ocorrendo após quantos dias de empréstimo? (0 para hoje): ").strip()
+        if not dias_input:
+            dias_decorridos_simulados = 0
+            break
+        elif dias_input.isdigit():
+            dias_decorridos_simulados = int(dias_input)
+            break
+        print("Erro: Digite um número inteiro de dias.")
+
+    if dias_decorridos_simulados > 7:
+        dias_atraso = dias_decorridos_simulados - 7
+        multa = dias_atraso * 1.50
+    else:
+        dias_atraso = 0
+        multa = 0.0
+
+    data_emp = datetime.strptime(emprestimo_ativo["data_emprestimo"], "%Y-%m-%d %H:%M:%S")
+    data_devolucao = data_emp + timedelta(days=dias_decorridos_simulados)
 
     emprestimo_ativo["devolvido"] = True
-    emprestimo_ativo["data_devolucao"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    emprestimo_ativo["data_devolucao"] = data_devolucao.strftime("%Y-%m-%d %H:%M:%S")
 
     livros[titulo]["disponivel"] = True
 

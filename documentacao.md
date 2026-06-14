@@ -68,7 +68,7 @@
 **Data:** 12/06/2026
 
 ### - RF003- Registro de Emprestimo
-**Descrição:** O sistema deve registrar a operação de empréstimo relacionando o CPF do Aluno ao Título do Livro
+**Descrição:** O sistema deve registrar a operação de empréstimo relacionando o CPF do Aluno ao Título do Livro, capturando automaticamente a data e hora do relógio local do sistema.
 
 **Prioridade:** Essencial (Alta)
 
@@ -86,13 +86,13 @@
 **Data:** 2026-05-27
 
 ### - RF005- Consulta de Pendências
-**Descrição:** O sistema deve emitir um relatório em formato de texto no terminal contendo todos os empréstimos em atraso quando solicitado pelo operador.
+**Descrição:**O sistema deve emitir um painel administrativo em formato de tabela no terminal contendo o status em tempo real de todos os empréstimos ativos, calculando dinamicamente os dias restantes ou dias de atraso com base na data atual.
 
 **Prioridade:** Importante (Média)
 
-**Versão:** 1.0
+**Versão:** 1.5
 
-**Data:** 2026-05-27
+**Data:** 2026-06-14
 
 ### 3.2 Regras de Negócio(RN)
 **Descrição:** Critérios de excelência exigidos pelo cliente ou mercado para o sistema.
@@ -115,13 +115,13 @@
 **Data:** 2026-05-27
 
 ### - RN003 - Quadro de Multas
-**Descrição:** O sistema deve aplicar uma penalidade financeira teórica ou suspensão temporal ao cadastro do aluno sempre que o prazo de devolução de um empréstimo for ultrapassado.
+**Descrição:**O sistema deve calcular em tempo real no painel de pendências e aplicar uma penalidade financeira de R$ 1,50 por dia de atraso no momento do registro da devolução, caso o prazo regulamentar de 7 dias de empréstimo seja ultrapassado.
 
 **Prioridade:** Importante (Média)
 
-**Versão:** 1.0
+**Versão:** 1.5
 
-**Data:** 2026-05-27
+**Data:** 2026-06-14
 
 ### - RN004- Restrição de Idade
 **Descrição:** O sistema deve bloquear o empréstimo se a idade do aluno for inferior à Classificação Indicativa cadastrada no livro.
@@ -165,9 +165,11 @@
 
 ## 4. Controle de Versões
 ### Histórico de Versões
-| Versão | Data | Autor | Modificações |
-|--------|------|-------|--------------|
+| Versão |   Data    |      Autor      |     Modificações     |
+|--------|-----------|-----------------|----------------------|
 | 1.0    | 2026-05-27| Rafael & Sophia | Versão Inicial do Projeto|
 | 1.1    | 2026-06-05| Rafael & Sophia | Depuração do Código |
 | 1.2    | 2026-06-12| Rafael          | Depuração do Código e correção de Lógica | 
 | 1.3    | 2026-06-13| Rafael          | Implementação da RN004|
+| 1.4    | 2026-06-13| Rafael          | Depuração do Código|
+| 1.5    | 2026-06-14| Rafael          | Implementação do painel de pendências em tempo real (RF005) e migração da simulação de dias de atraso para o fluxo de devolução (RF003, RN003) |
